@@ -1,3 +1,5 @@
+import Database from "./Database";
+
 const express = require("express");
 const cors = require("cors");
 
@@ -12,6 +14,7 @@ export default function Server() {
 
   //Ruta POST /wa-bot para mandar los mensajes
   app.post("/", async (req, res) => {
+    new Database();
     res.status(200).json({ message: "Works!" });
   });
 
