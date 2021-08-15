@@ -1,0 +1,37 @@
+{
+  "name": "crypt-me",
+  "version": "1.0.0",
+  "description": "Share information securely",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "start": "nodemon --exec node_modules/.bin/babel-node index.js",
+    "sintax:test": "prettier --check \"{,!(node_modules)/**/}*.js\"",
+    "sintax:fix": "prettier --check --write \"{,!(node_modules)/**/}*.js\"",
+    "lint": "eslint . --ext .js",
+    "check": "npm run sintax:test && npm run lint && jest"
+  },
+  "author": "Rodrigo Maafs Atilano",
+  "license": "ISC",
+  "dependencies": {
+    "check-files-exist": "^1.0.1",
+    "cors": "^2.8.5",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.14.8",
+    "@babel/core": "^7.14.8",
+    "@babel/eslint-parser": "^7.14.7",
+    "@babel/node": "^7.14.7",
+    "@babel/preset-env": "^7.14.8",
+    "eslint": "^7.32.0",
+    "jest": "^27.0.6",
+    "nodemon": "^2.0.12",
+    "prettier": "^2.3.2"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "*.json"
+    ]
+  }
+}
