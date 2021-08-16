@@ -39,19 +39,10 @@ jobs:
           echo "Se revisará la calidad del código para que la consola no tenga warnings ni errores."
           echo "Se validará que no existan variables sin usar, console.logs, malos estándares de código, etc."
           npm run lint
-  unit-test:
-    needs: code-quality
-    name: "🧪 Unit tests"
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [12.x]
-
-    steps:
       - name: 👀 Estándares del proyecto
         run: |
           npm test -- estandar.test.js
-      - name: 👀 Pruebas de conexiones
+      - name: 🧪 Pruebas unitarias de conexiones
         env:
           MONGO_BD: ${{ secrets.MONGO_BD }}
         run: |
