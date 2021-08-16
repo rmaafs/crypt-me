@@ -86,8 +86,14 @@ export default class Database {
 
       //Si obtuvimos algún registro
       if (data && data.data) {
+        //Desencriptamos el texto almacenado en BD
         const text = this.decrypt(data.data, secret);
         if (text) {
+          //Eliminamos el registro en BD
+          await this.deleteReg(objectId)
+            .then(() => console.log("Eliminado"))
+            .catch((err) => console.log(id, "no fue eliminado:", err));
+
           return resolve({ text: text });
         } else {
           return reject(LANG_NOT_FOUND);
@@ -96,6 +102,15 @@ export default class Database {
         reject(LANG_NOT_FOUND);
       }
     });
+  }
+
+  /**
+   * Función que elimina un registro de la base de datos
+   * @param {ObjectId} objectId ObjectId de MongoDB
+   * @returns Promesa con la información de la petición
+   */
+  async deleteReg(objectId) {
+    return this.coll.deleteOne({ _id: objectId });
   }
 
   /**
