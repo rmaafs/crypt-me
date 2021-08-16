@@ -1,0 +1,10 @@
+.click-copy {
+  cursor: pointer;
+  color: blueviolet;
+  font-weight: bold;
+}
+
+.click-copy-copiado {
+  color: green;
+  font-weight: bold;
+}
