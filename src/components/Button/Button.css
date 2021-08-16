@@ -7,3 +7,24 @@
   border-radius: 20px;
   cursor: pointer;
 }
+
+.spinner {
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border-left-color: white;
+  animation: spin 1s ease infinite;
+  position: relative;
+  top: 5px;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}

@@ -1,10 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Button.css";
 
 const Button = (props) => {
+  const [loading, setLoading] = useState(false);
+
+  const click = () => {
+    setLoading(true);
+    if (!loading) {
+      props.onClick().finally(() => setLoading(false));
+    }
+  };
+
   return (
-    <div onClick={props.onClick} className="button">
-      {props.children}
+    <div onClick={loading ? () => {} : click} className="button">
+      {loading ? <div className="spinner"></div> : props.children}
     </div>
   );
 };
