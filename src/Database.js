@@ -7,7 +7,7 @@ const LANG_NOT_FOUND =
   "Registro no encontrado. Ingresa un ID válido, o problablemente el ID que ingresaste ya fue eliminado.";
 
 export default class Database {
-  constructor() {
+  constructor(callbackStartServer) {
     //Conectamos la base de datos de mongodb
     MongoClient.connect(credentials.mongopath, {
       useUnifiedTopology: true,
@@ -17,6 +17,9 @@ export default class Database {
 
       this.db = this.client.db("crypt-me");
       this.coll = this.db.collection("regs"); //Collection
+
+      //Iniciamos el API REST
+      callbackStartServer();
     });
   }
 
