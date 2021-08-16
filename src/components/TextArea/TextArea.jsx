@@ -2,7 +2,7 @@ import React from "react";
 import "./TextArea.css";
 
 const TextArea = () => {
-  return <textarea>Prueba</textarea>;
+  return <textarea placeholder="Escribe tu texto..."></textarea>;
 };
 
 export default TextArea;
