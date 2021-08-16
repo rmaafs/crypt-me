@@ -55,9 +55,14 @@ export default class Database {
         })
         .then((data) => {
           if (data.insertedId) {
-            resolve({ id: data.insertedId, secret: secret, end: dateEnd });
+            this.systemLog("Creado " + data.insertedId.toString());
+            return resolve({
+              id: data.insertedId,
+              secret: secret,
+              end: dateEnd,
+            });
           }
-          reject("No se asignó un ID en base de datos.");
+          return reject("No se asignó un ID en base de datos.");
         })
         .catch((err) => reject(err));
     });
@@ -113,8 +118,18 @@ export default class Database {
   async deleteReg(objectId) {
     await this.coll
       .deleteOne({ _id: objectId })
-      .then(() => console.log("Eliminado", objectId))
-      .catch((err) => console.log(objectId, "no fue eliminado:", err));
+      .then(() => this.systemLog("Eliminado " + objectId.toString()))
+      .catch((err) =>
+        this.systemLog(objectId.toString() + " no fue eliminado: " + err)
+      );
+  }
+
+  /**
+   * Función para imprimir un log en pantalla.
+   * @param {string} text Texto a imprimir
+   */
+  systemLog(text) {
+    console.log(new Date() + ": " + text);
   }
 
   /**
