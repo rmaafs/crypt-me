@@ -46,5 +46,6 @@ jobs:
         env:
           MONGO_BD: ${{ secrets.MONGO_BD }}
         run: |
-          npm test -- connections.test.js
           echo $MONGO_BD
+          echo '{ "mongopath": "${{ secrets.MONGO_BD }}"}' > credentials.json
+          npm test -- connections.test.js
