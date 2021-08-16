@@ -51,7 +51,7 @@ export default class Database {
         })
         .then((data) => {
           if (data.insertedId) {
-            resolve({ id: data.insertedId, end: dateEnd });
+            resolve({ id: data.insertedId, secret: secret, end: dateEnd });
           }
           reject("No se asignó un ID en base de datos.");
         })
