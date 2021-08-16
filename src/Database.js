@@ -1,6 +1,6 @@
 import CryptoJS from "crypto-js";
 import crypto from "crypto";
-import { MongoClient } from "mongodb";
+import { MongoClient, ObjectId } from "mongodb";
 import credentials from "../credentials.json";
 
 export default class Database {
@@ -56,6 +56,32 @@ export default class Database {
           reject("No se asignó un ID en base de datos.");
         })
         .catch((err) => reject(err));
+
+      /*const txtDecrypted = this.decrypt(txtEncripted, secret);
+      console.log("txtDecrypted:", txtDecrypted);*/
+    });
+  }
+
+  async getReg(id, secret) {
+    return new Promise(async (resolve, reject) => {
+      if (id === null || id.trim() == "") {
+        reject("Por favor, envía el ID");
+      }
+
+      //Buscamos el registro en base de datos
+      const data = await this.coll.findOne({
+        _id: new ObjectId(id),
+      });
+      console.log(data);
+
+      if (data && data.data) {
+        const text = this.decrypt(data.data, secret);
+        resolve({ text: text });
+      } else {
+        reject(
+          "Registro no encontrado. Ingresa un ID válido, o problablemente el ID que ingresaste ya fue eliminado."
+        );
+      }
 
       /*const txtDecrypted = this.decrypt(txtEncripted, secret);
       console.log("txtDecrypted:", txtDecrypted);*/

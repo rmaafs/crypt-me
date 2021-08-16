@@ -14,7 +14,7 @@ export default function Server() {
     res.status(200).json({ message: "Works!" });
   });
 
-  //Ruta POST /wa-bot para mandar los mensajes
+  //Ruta POST / para mandar los mensajes
   app.post("/", async (req, res) => {
     //Guardamos la IP del que lo envía
     const ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
@@ -25,6 +25,32 @@ export default function Server() {
       .addReg(text, ip)
       .then((data) => {
         if (data.id) {
+          res.status(200).json(data);
+        } else {
+          res
+            .status(400)
+            .json({ error: "Hubo un error al procesar tu solicitud." });
+        }
+      })
+      .catch((err) => {
+        res.status(400).json({ error: err });
+      });
+  });
+
+  //Ruta PATCH / para obtener el texto desencriptado
+  app.patch("/", async (req, res) => {
+    //Guardamos la IP del que lo envía
+    const ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
+    //ID del texto
+    const id = req.body.id;
+    //Secret para desencriptar
+    const secret = req.body.secret;
+
+    await db
+      .getReg(id, secret)
+      .then((data) => {
+        console.log(data);
+        if (data.text) {
           res.status(200).json(data);
         } else {
           res
