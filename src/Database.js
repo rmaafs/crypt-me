@@ -2,6 +2,7 @@ import CryptoJS from "crypto-js";
 import crypto from "crypto";
 import { MongoClient, ObjectId } from "mongodb";
 import credentials from "../credentials.json";
+import { Promise } from "es6-promise";
 
 const LANG_NOT_FOUND =
   "Registro no encontrado. Ingresa un ID válido, o problablemente el ID que ingresaste ya fue eliminado.";
@@ -30,7 +31,7 @@ export default class Database {
    * @returns Promesa de mongodb
    */
   async addReg(text, ip) {
-    return new Promise(async (resolve, reject) => {
+    return await new Promise((resolve, reject) => {
       if (!text) {
         return reject('Por favor, envía el texto a encriptar como "text".');
       } else if (!this.isBase64(text)) {
@@ -50,7 +51,7 @@ export default class Database {
       dateEnd = dateEnd.getTime();
 
       //Guardamos en base de datos
-      await this.coll
+      this.coll
         .insertOne({
           ip: this.md5(ip),
           data: txtEncripted,
@@ -72,7 +73,7 @@ export default class Database {
   }
 
   async getReg(id, secret) {
-    return new Promise(async (resolve, reject) => {
+    return await new Promise((resolve, reject) => {
       if (!id) {
         return reject('Por favor, envía el ID como "id".');
       } else if (!secret) {
@@ -88,28 +89,33 @@ export default class Database {
       } catch (e) {
         return reject(LANG_NOT_FOUND);
       }
-      const data = await this.coll.findOne({
-        _id: objectId,
-      });
+      this.coll
+        .findOne({
+          _id: objectId,
+        })
+        .then((data) => {
+          //Si obtuvimos algún registro
+          if (data && data.data) {
+            //Desencriptamos el texto almacenado en BD
+            const text = this.decrypt(data.data, secret);
+            if (text) {
+              //Eliminamos el registro en BD
+              this.deleteReg(objectId);
 
-      //Si obtuvimos algún registro
-      if (data && data.data) {
-        //Desencriptamos el texto almacenado en BD
-        const text = this.decrypt(data.data, secret);
-        if (text) {
-          //Eliminamos el registro en BD
-          await this.deleteReg(objectId);
+              return resolve({ text: text });
+            } else {
+              //Por seguridad, eliminaremos el registro para evitar fuerza bruta.
+              this.deleteReg(objectId);
 
-          return resolve({ text: text });
-        } else {
-          //Por seguridad, eliminaremos el registro para evitar fuerza bruta.
-          await this.deleteReg(objectId);
-
-          return reject(LANG_NOT_FOUND);
-        }
-      } else {
-        reject(LANG_NOT_FOUND);
-      }
+              return reject(LANG_NOT_FOUND);
+            }
+          } else {
+            reject(LANG_NOT_FOUND);
+          }
+        })
+        .catch(() => {
+          reject(LANG_NOT_FOUND);
+        });
     });
   }
 
@@ -173,12 +179,12 @@ export default class Database {
 
   /**
    * Función para encriptar un texto usando un secret
-   * @param {string} encrypted Texto a encriptar
+   * @param {string} txtEncripted Texto a encriptar
    * @param {string} key Secret key
    * @returns Texto encriptado
    */
-  encrypt(encrypted, key) {
-    var encrypted = CryptoJS.AES.encrypt(encrypted, key, {
+  encrypt(txtEncripted, key) {
+    var encrypted = CryptoJS.AES.encrypt(txtEncripted, key, {
       mode: CryptoJS.mode.CBC,
       padding: CryptoJS.pad.Pkcs7,
     });
