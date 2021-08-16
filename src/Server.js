@@ -40,7 +40,7 @@ export default function Server() {
   //Ruta PATCH / para obtener el texto desencriptado
   app.patch("/", async (req, res) => {
     //Guardamos la IP del que lo envía
-    const ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
+    //const ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
     //ID del texto
     const id = req.body.id || "";
     //Secret para desencriptar
@@ -49,7 +49,6 @@ export default function Server() {
     await db
       .getReg(id, secret)
       .then((data) => {
-        console.log(data);
         if (data.text) {
           res.status(200).json(data);
         } else {
