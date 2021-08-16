@@ -11,7 +11,7 @@ export default class Database {
     //Conectamos la base de datos de mongodb
     MongoClient.connect(credentials.mongopath, {
       useUnifiedTopology: true,
-    }).then((client) => {
+    }).then(async (client) => {
       this.client = client;
       console.log("Connected to Database");
 
