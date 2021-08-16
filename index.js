@@ -1,3 +1,1 @@
-import Server from "./src/server";
-
-Server();
+require("./src/server");
