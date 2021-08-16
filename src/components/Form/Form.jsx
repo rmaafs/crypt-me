@@ -3,33 +3,29 @@ import Button from "../Button/Button";
 import Card from "../Card/Card";
 import ShareInfo from "../ShareInfo/ShareInfo";
 import TextArea from "../TextArea/TextArea";
+import server from "../../server.json";
 
 const Form = () => {
-  const json = {
-    id: "6119f1d3c809b3dcf08676a3",
-    secret: "0952ce55db72294e07eb983673d8287e",
-    end: 1629176659066,
-  };
-
   const [text, setText] = useState("");
-  const [jsonResponse, setJsonResponse] = useState(json);
+  const [jsonResponse, setJsonResponse] = useState(null);
 
   const sendInfo = () => {
     return new Promise((resolve, reject) => {
       const base64 = Buffer.from(text).toString("base64");
       console.log(base64);
 
-      if (json.id) {
-        setJsonResponse(json);
-      }
-
-      setTimeout(function () {
-        if (true) {
-          resolve(true);
-        } else {
-          reject(false);
-        }
-      }, 1000);
+      fetch(server.url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ text: base64 }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.id) setJsonResponse(data);
+        })
+        .finally(() => resolve(true));
     });
   };
 
