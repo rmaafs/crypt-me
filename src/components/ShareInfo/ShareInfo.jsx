@@ -4,7 +4,7 @@ import ClickCopy from "../ClickCopy/ClickCopy";
 const ShareInfo = ({ data }) => {
   const id = data.id;
   const secret = data.secret;
-  const url = "https://crypt.rmaafs.com/" + id + "/" + secret;
+  const url = window.location.href + id + "/" + secret;
 
   return (
     <div>
