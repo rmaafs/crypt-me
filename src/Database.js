@@ -3,6 +3,9 @@ import crypto from "crypto";
 import { MongoClient, ObjectId } from "mongodb";
 import credentials from "../credentials.json";
 
+const LANG_NOT_FOUND =
+  "Registro no encontrado. Ingresa un ID válido, o problablemente el ID que ingresaste ya fue eliminado.";
+
 export default class Database {
   constructor() {
     //Conectamos la base de datos de mongodb
@@ -25,9 +28,10 @@ export default class Database {
    */
   async addReg(text, ip) {
     return new Promise(async (resolve, reject) => {
-      if (!this.isBase64(text)) {
-        reject("Please, send a base64 string.");
-        return;
+      if (!text) {
+        return reject('Por favor, envía el texto a encriptar como "text".');
+      } else if (!this.isBase64(text)) {
+        return reject("Por favor, envía un texto en formato base64.");
       }
 
       //Obtenemos el key con el que encriptaremos el texto
@@ -61,27 +65,36 @@ export default class Database {
 
   async getReg(id, secret) {
     return new Promise(async (resolve, reject) => {
-      if (id === null || id.trim() == "") {
-        reject("Por favor, envía el ID");
-      }
-
-      //Buscamos el registro en base de datos
-      const data = await this.coll.findOne({
-        _id: new ObjectId(id),
-      });
-      console.log(data);
-
-      if (data && data.data) {
-        const text = this.decrypt(data.data, secret);
-        resolve({ text: text });
-      } else {
-        reject(
-          "Registro no encontrado. Ingresa un ID válido, o problablemente el ID que ingresaste ya fue eliminado."
+      if (!id) {
+        return reject('Por favor, envía el ID como "id".');
+      } else if (!secret) {
+        return reject(
+          'Por favor, envía la llave de desencriptación como "secret".'
         );
       }
 
-      /*const txtDecrypted = this.decrypt(txtEncripted, secret);
-      console.log("txtDecrypted:", txtDecrypted);*/
+      //Buscamos el registro en base de datos
+      let objectId = null;
+      try {
+        objectId = new ObjectId(id);
+      } catch (e) {
+        return reject("ID inválido.");
+      }
+      const data = await this.coll.findOne({
+        _id: objectId,
+      });
+
+      //Si obtuvimos algún registro
+      if (data && data.data) {
+        const text = this.decrypt(data.data, secret);
+        if (text) {
+          return resolve({ text: text });
+        } else {
+          return reject(LANG_NOT_FOUND);
+        }
+      } else {
+        reject(LANG_NOT_FOUND);
+      }
     });
   }
 

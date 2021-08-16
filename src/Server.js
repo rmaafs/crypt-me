@@ -19,7 +19,7 @@ export default function Server() {
     //Guardamos la IP del que lo envía
     const ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
     //Texto a encriptar
-    const text = req.body.text;
+    const text = req.body.text || "";
 
     await db
       .addReg(text, ip)
@@ -42,9 +42,9 @@ export default function Server() {
     //Guardamos la IP del que lo envía
     const ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
     //ID del texto
-    const id = req.body.id;
+    const id = req.body.id || "";
     //Secret para desencriptar
-    const secret = req.body.secret;
+    const secret = req.body.secret || "";
 
     await db
       .getReg(id, secret)
