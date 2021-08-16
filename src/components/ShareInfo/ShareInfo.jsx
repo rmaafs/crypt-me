@@ -8,7 +8,10 @@ const ShareInfo = ({ data }) => {
 
   return (
     <div>
-      <ClickCopy text={url} />
+      <ClickCopy
+        text={url}
+        label="Pulsa aquí para copiar el link para desencriptar"
+      />
       <br />
       <br />
       <div>

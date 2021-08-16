@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./ClickCopy.css";
 
-const ClickCopy = ({ text }) => {
+const ClickCopy = ({ text, label }) => {
   const [copiado, setCopiado] = useState(false);
 
   const copyClipboard = () => {
@@ -16,7 +16,7 @@ const ClickCopy = ({ text }) => {
 
   return !copiado ? (
     <span onClick={copyClipboard} className="click-copy">
-      Pulsa aquí para copiar el link para desencriptar
+      {label}
     </span>
   ) : (
     <span className="click-copy-copiado">¡Copiado!</span>

@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import Card from "../Card/Card";
 import TextArea from "../TextArea/TextArea";
 import server from "../../server.json";
+import ClickCopy from "../ClickCopy/ClickCopy";
+import Button from "../Button/Button";
 
-const ViewContent = ({ id, secret }) => {
+const ViewContent = ({ navigate, id, secret }) => {
   const [loading, setLoading] = useState(true);
   const [text, setText] = useState(null);
   const [title, setTitle] = useState("Cargando...");
@@ -22,6 +24,7 @@ const ViewContent = ({ id, secret }) => {
           if (data.text) {
             const decrypted = Buffer(data.text, "base64").toString("ascii");
             setText(decrypted);
+            setTitle("¡Listo!");
           } else if (data.error) {
             setTitle(data.error);
           }
@@ -41,8 +44,18 @@ const ViewContent = ({ id, secret }) => {
     <Card>
       <h2>{title}</h2>
       {!loading && text !== null ? (
-        <TextArea disabled={true} defaultText={text} />
+        <Fragment>
+          <TextArea disabled={true} defaultText={text} />
+          <ClickCopy text={text} label="Click aquí para copiar el contenido" />
+        </Fragment>
       ) : null}
+      {!loading && (
+        <div style={{ paddingTop: "30px" }}>
+          <Button onClick={() => navigate("/")}>Ir al inicio</Button>
+        </div>
+      )}
+      <br />
+      <br />
       ID: {id}
       <br />
       secret: {secret}
