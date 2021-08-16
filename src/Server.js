@@ -7,6 +7,8 @@ export default function Server() {
   const app = express().use(cors()).use(express.json()); //Crea al servidor
   const port = process.env.PORT || 20203; //Puerto donde abriremos el servicio
 
+  const db = new Database();
+
   //Ruta GET / para saber si el servicio está corriendo
   app.get("/", (req, res) => {
     res.status(200).json({ message: "Works!" });
@@ -14,8 +16,25 @@ export default function Server() {
 
   //Ruta POST /wa-bot para mandar los mensajes
   app.post("/", async (req, res) => {
-    new Database();
-    res.status(200).json({ message: "Works!" });
+    //Guardamos la IP del que lo envía
+    const ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
+    //Texto a encriptar
+    const text = req.body.text;
+
+    await db
+      .addReg(text, ip)
+      .then((data) => {
+        if (data.id) {
+          res.status(200).json(data);
+        } else {
+          res
+            .status(400)
+            .json({ error: "Hubo un error al procesar tu solicitud." });
+        }
+      })
+      .catch((err) => {
+        res.status(400).json({ error: err });
+      });
   });
 
   //Abrimos el servicio de API REST
