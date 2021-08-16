@@ -1,7 +1,13 @@
 import React from "react";
+import Form from "./Form/Form";
+import "./Main.css";
 
 const Main = () => {
-  return <div>Hola</div>;
+  return (
+    <div>
+      <Form />
+    </div>
+  );
 };
 
 export default Main;
