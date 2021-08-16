@@ -125,6 +125,22 @@ export default class Database {
   }
 
   /**
+   * Función que elimina registros que excedieron su vigencia.
+   */
+  async deleteDueRegs() {
+    await this.coll
+      .deleteMany({ end: { $lte: Date.now() } })
+      .then((data) => {
+        if (data.deletedCount > 0) {
+          this.systemLog(
+            data.deletedCount + " registros borrados automáticamente."
+          );
+        }
+      })
+      .catch((err) => console.log(err));
+  }
+
+  /**
    * Función para imprimir un log en pantalla.
    * @param {string} text Texto a imprimir
    */

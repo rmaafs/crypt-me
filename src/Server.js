@@ -9,6 +9,11 @@ export default function Server() {
 
   const db = new Database();
 
+  //Eliminamos los registros viejos en la base de datos
+  setInterval(function () {
+    db.deleteDueRegs();
+  }, 15 * 60 * 1000); //Cada 15 minutos
+
   //Ruta GET / para saber si el servicio está corriendo
   app.get("/", (req, res) => {
     res.status(200).json({ message: "Works!" });
