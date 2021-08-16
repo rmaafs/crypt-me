@@ -17,10 +17,9 @@ export default function Server() {
     }, 15 * 60 * 1000); //Cada 15 minutos
 
     //Abrimos el servicio de API REST
-    app.listen(port, () => {
+    const server = app.listen(port, () => {
       console.log(`API REST Ejecutado en el puerto http://localhost:${port}`);
-
-      app.emit("appStarted");
+      app.emit("appStarted", server, db);
     });
   });
 

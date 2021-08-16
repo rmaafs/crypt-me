@@ -48,4 +48,4 @@ jobs:
         run: |
           echo $MONGO_BD
           echo '{ "mongopath": "${{ secrets.MONGO_BD }}"}' > credentials.json
-          npm test -- connections.test.js
+          npm test -- connections.test.js --forceExit

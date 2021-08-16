@@ -215,4 +215,8 @@ export default class Database {
   md5(text) {
     return CryptoJS.MD5(text).toString();
   }
+
+  closeConnection() {
+    this.client.close();
+  }
 }

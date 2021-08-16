@@ -5,10 +5,20 @@ const app = new Server();
 const agent = request.agent(app);
 jest.setTimeout(5 * 1000);
 
+let server = null;
+let mongo = null;
+
 beforeAll((done) => {
-  app.on("appStarted", function () {
+  app.on("appStarted", function (sv, bd) {
+    server = sv;
+    mongo = bd;
     done();
   });
+});
+
+afterAll(async () => {
+  await mongo.closeConnection();
+  await server.close();
 });
 
 describe("Verificar que guardan los registros", () => {
