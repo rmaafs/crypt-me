@@ -78,7 +78,7 @@ export default class Database {
       try {
         objectId = new ObjectId(id);
       } catch (e) {
-        return reject("ID inválido.");
+        return reject(LANG_NOT_FOUND);
       }
       const data = await this.coll.findOne({
         _id: objectId,
