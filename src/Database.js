@@ -90,12 +90,13 @@ export default class Database {
         const text = this.decrypt(data.data, secret);
         if (text) {
           //Eliminamos el registro en BD
-          await this.deleteReg(objectId)
-            .then(() => console.log("Eliminado"))
-            .catch((err) => console.log(id, "no fue eliminado:", err));
+          await this.deleteReg(objectId);
 
           return resolve({ text: text });
         } else {
+          //Por seguridad, eliminaremos el registro para evitar fuerza bruta.
+          await this.deleteReg(objectId);
+
           return reject(LANG_NOT_FOUND);
         }
       } else {
@@ -110,7 +111,10 @@ export default class Database {
    * @returns Promesa con la información de la petición
    */
   async deleteReg(objectId) {
-    return this.coll.deleteOne({ _id: objectId });
+    await this.coll
+      .deleteOne({ _id: objectId })
+      .then(() => console.log("Eliminado", objectId))
+      .catch((err) => console.log(objectId, "no fue eliminado:", err));
   }
 
   /**
