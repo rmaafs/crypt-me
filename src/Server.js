@@ -4,7 +4,7 @@ const express = require("express");
 const cors = require("cors");
 
 export default function Server() {
-  const app = express().use(cors()).use(express.json()); //Crea al servidor
+  let app = express().use(cors()).use(express.json()); //Crea al servidor
   const port = process.env.PORT || 20203; //Puerto donde abriremos el servicio
 
   const db = new Database(() => {
@@ -40,7 +40,7 @@ export default function Server() {
       .addReg(text, ip)
       .then((data) => {
         if (data.id) {
-          res.status(200).json(data);
+          res.status(201).json(data);
         } else {
           res
             .status(400)
