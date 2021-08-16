@@ -1,5 +1,5 @@
 const request = require("supertest");
-const { default: Server } = require("../server");
+const { default: Server } = require("../Server");
 
 const app = new Server();
 const agent = request.agent(app);
