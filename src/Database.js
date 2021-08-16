@@ -56,9 +56,6 @@ export default class Database {
           reject("No se asignó un ID en base de datos.");
         })
         .catch((err) => reject(err));
-
-      /*const txtDecrypted = this.decrypt(txtEncripted, secret);
-      console.log("txtDecrypted:", txtDecrypted);*/
     });
   }
 
