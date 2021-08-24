@@ -1,7 +1,13 @@
 .card {
-  background-color: #c6c6c6;
+  background-color: transparent;
   width: 100%;
   max-width: 500px;
   padding: 20px;
   border-radius: 20px;
+}
+
+.card h2 {
+  color: white;
+  font-weight: bold;
+  font-size: 35px;
 }
