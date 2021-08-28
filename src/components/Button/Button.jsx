@@ -5,6 +5,11 @@ const Button = (props) => {
   const [loading, setLoading] = useState(false);
 
   const click = () => {
+    //Si no quiere animación al ejecutar la función...
+    if (props.onClickNoAnimation !== undefined) {
+      props.onClickNoAnimation();
+      return;
+    }
     setLoading(true);
     if (!loading) {
       props.onClick().finally(() => setLoading(false));

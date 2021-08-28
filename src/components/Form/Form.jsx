@@ -34,7 +34,7 @@ const Form = () => {
       {jsonResponse ? (
         <Fragment>
           <h2>Texto encriptado</h2>
-          <ShareInfo data={jsonResponse} />
+          <ShareInfo data={jsonResponse} onBack={() => setJsonResponse(null)} />
         </Fragment>
       ) : (
         <Fragment>
