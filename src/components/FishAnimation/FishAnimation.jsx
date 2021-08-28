@@ -5,6 +5,7 @@ import Fishes from "./Fishes/Fishes";
 const FishAnimation = () => {
   return (
     <Fragment>
+      <Fishes />
       <div id="background-wrap">
         <div className="bubble x1"></div>
         <div className="bubble x2"></div>
@@ -17,7 +18,6 @@ const FishAnimation = () => {
         <div className="bubble x9"></div>
         <div className="bubble x10"></div>
       </div>
-      <Fishes />
     </Fragment>
   );
 };
