@@ -57,7 +57,7 @@ const ViewContent = ({ navigate, id, secret }) => {
       ) : null}
       {!loading && (
         <div style={{ paddingTop: "30px" }}>
-          <Button onClick={() => navigate("/")}>
+          <Button onClickNoAnimation={() => navigate("/")}>
             <i className="btn-icon fas fa-arrow-left" />
             Ir al inicio
           </Button>

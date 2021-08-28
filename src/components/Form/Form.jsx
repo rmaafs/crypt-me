@@ -10,9 +10,8 @@ const Form = () => {
   const [jsonResponse, setJsonResponse] = useState(null);
 
   const sendInfo = () => {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       const base64 = Buffer.from(text).toString("base64");
-      console.log(base64);
 
       fetch(server.url, {
         method: "POST",
@@ -25,7 +24,7 @@ const Form = () => {
         .then((data) => {
           if (data.id) setJsonResponse(data);
         })
-        .finally(() => resolve(true));
+        .catch(() => resolve(true));
     });
   };
 
