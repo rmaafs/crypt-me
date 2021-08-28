@@ -12,6 +12,7 @@ const ShareInfo = ({ data }) => {
       <ClickCopy
         text={url}
         label="Pulsa aquí para copiar el link para desencriptar"
+        icon="fas fa-clipboard"
       />
       <br />
       <br />
