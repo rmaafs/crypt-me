@@ -5,6 +5,12 @@ const cors = require("cors");
 
 export default function Server() {
   let app = express().use(cors()).use(express.json()); //Crea al servidor
+
+  app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    next();
+  });
+
   const port = process.env.PORT || 20203; //Puerto donde abriremos el servicio
 
   const db = new Database(() => {
