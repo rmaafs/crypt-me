@@ -7,11 +7,7 @@ import server from "../../server.json";
 
 const Form = () => {
   const [text, setText] = useState("");
-  const [jsonResponse, setJsonResponse] = useState({
-    id: "6129b4a9279d98a4f553fa85",
-    secret: "ad9abc1c54e58a548ebc00ff62706146",
-    end: 1630209577629,
-  });
+  const [jsonResponse, setJsonResponse] = useState(null);
 
   const sendInfo = () => {
     return new Promise((resolve, reject) => {
