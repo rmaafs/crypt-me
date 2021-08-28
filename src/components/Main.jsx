@@ -8,11 +8,11 @@ import FishAnimation from "./FishAnimation/FishAnimation";
 const Main = () => {
   return (
     <div className="container">
-      <FishAnimation />
       <Router>
         <Form path="/" />
         <ViewContent path=":id/:secret" />
       </Router>
+      <FishAnimation />
     </div>
   );
 };
