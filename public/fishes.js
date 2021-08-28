@@ -13,7 +13,7 @@ $(function () {
 
   // events
   $(window).on("resize", determinePondSize);
-  $pond.on("click", stirPond);
+  $("body").on("click", stirPond);
 
   // fill the pond
   spawnStartingFish();
@@ -31,9 +31,27 @@ function spawnStartingFish() {
 }
 
 function stirPond(event) {
-  if ($(".fish").length < MAX_FISHES) {
+  //Primero verificamos que clickeo fuera del card.
+  var fueraDelCard = true;
+  $(event.target)
+    .parents()
+    .each(function (index, val) {
+      //Si los padres de donde clickeo, es la card...
+      if ($(val).hasClass("card")) {
+        fueraDelCard = false; //Le decimos que clickeo dentro del card
+        return;
+      }
+    });
+
+  if (fueraDelCard == true && $(".fish").length < MAX_FISHES) {
     spawnFish(event.clientX, event.clientY);
   }
+}
+
+function isSameTarget(className, target) {
+  var items = document.getElementsByClassName(className);
+  console.log(items);
+  return items.length > 0 && items[0].isSameNode(target);
 }
 
 function spawnFish(x, y) {
