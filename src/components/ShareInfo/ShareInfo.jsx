@@ -1,5 +1,6 @@
 import React from "react";
 import ClickCopy from "../ClickCopy/ClickCopy";
+import "./ShareInfo.css";
 
 const ShareInfo = ({ data }) => {
   const id = data.id;
@@ -7,14 +8,14 @@ const ShareInfo = ({ data }) => {
   const url = window.location.href + id + "/" + secret;
 
   return (
-    <div>
+    <div className="share-info">
       <ClickCopy
         text={url}
         label="Pulsa aquí para copiar el link para desencriptar"
       />
       <br />
       <br />
-      <div>
+      <div className="share-info-text">
         <b>ID:</b>
         <br />
         {id}
