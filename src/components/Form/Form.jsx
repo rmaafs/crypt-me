@@ -40,7 +40,10 @@ const Form = () => {
         <Fragment>
           <h2>Ingresa tu texto</h2>
           <TextArea onChange={setText} />
-          <Button onClick={sendInfo}>Enviar</Button>
+          <Button onClick={sendInfo}>
+            <i className="btn-icon fas fa-share-alt" />
+            Compartir
+          </Button>
         </Fragment>
       )}
     </Card>
