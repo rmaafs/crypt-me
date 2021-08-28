@@ -1,6 +1,7 @@
 body {
   background-color: #00b4ff;
   font-family: "Montserrat";
+  overflow: hidden;
 }
 
 .container {
