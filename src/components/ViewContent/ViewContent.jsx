@@ -46,19 +46,23 @@ const ViewContent = ({ navigate, id, secret }) => {
       {!loading && text !== null ? (
         <Fragment>
           <TextArea disabled={true} defaultText={text} />
-          <ClickCopy text={text} label="Click aquí para copiar el contenido" />
+          <div>
+            <ClickCopy
+              text={text}
+              label="Click aquí para copiar el contenido"
+              icon="fas fa-clipboard"
+            />
+          </div>
         </Fragment>
       ) : null}
       {!loading && (
         <div style={{ paddingTop: "30px" }}>
-          <Button onClick={() => navigate("/")}>Ir al inicio</Button>
+          <Button onClick={() => navigate("/")}>
+            <i className="btn-icon fas fa-arrow-left" />
+            Ir al inicio
+          </Button>
         </div>
       )}
-      <br />
-      <br />
-      ID: {id}
-      <br />
-      secret: {secret}
     </Card>
   );
 };
