@@ -43,6 +43,7 @@
     -->
   <script>
     var STARTING_FISH_COUNT = 5;
+    var MAX_FISHES = 10;
 
     // globals
     var $count, $pond, pondWidth, pondHeight;
@@ -74,7 +75,9 @@
     }
 
     function stirPond(event) {
-      spawnFish(event.clientX, event.clientY);
+      if ($(".fish").length < MAX_FISHES) {
+        spawnFish(event.clientX, event.clientY);
+      }
     }
 
     function spawnFish(x, y) {
