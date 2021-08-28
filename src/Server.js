@@ -7,7 +7,8 @@ export default function Server() {
   let app = express().use(cors()).use(express.json()); //Crea al servidor
 
   app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
+    req; //Para que no me aparezca que no usé la variable jaja
+    res.header("Access-Control-Allow-Origin", "*");
     next();
   });
 
