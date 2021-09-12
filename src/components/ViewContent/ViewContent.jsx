@@ -4,6 +4,7 @@ import TextArea from "../TextArea/TextArea";
 import server from "../../server.json";
 import ClickCopy from "../ClickCopy/ClickCopy";
 import Button from "../Button/Button";
+import HelpIcon from "../HelpIcon/HelpIcon";
 
 const ViewContent = ({ navigate, id, secret }) => {
   const [loading, setLoading] = useState(true);
@@ -45,6 +46,7 @@ const ViewContent = ({ navigate, id, secret }) => {
       <h2>{title}</h2>
       {!loading && text !== null ? (
         <Fragment>
+          <HelpIcon maxWidth="115px" />
           <TextArea disabled={true} defaultText={text} />
           <div>
             <ClickCopy
