@@ -101,6 +101,8 @@ const HelpIcon = (props) => {
                 La llave es la responsable de encriptar tu contenido, por lo que
                 si intentan desencriptarla con una llave incorrecta, el
                 contenido no será el real.
+                <br />
+                <b>📢 Nosotros no guardamos la llave.</b>
               </li>
             </ul>
             💻 Si eres desarrollador, revisa la consola para ver el repositorio
