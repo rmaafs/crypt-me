@@ -12,7 +12,8 @@ function Server() {
   const port = process.env.PORT || 20203; //Puerto donde abriremos el servicio
 
   app.use((req, res, next) => {
-    req; //Para que no me aparezca que no usé la variable jaja
+    if (!req) return; //Para que no me aparezca que no usé la variable jaja
+
     res.header("Access-Control-Allow-Origin", "*");
     next();
   });
