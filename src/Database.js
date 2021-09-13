@@ -7,7 +7,11 @@ import { Promise } from "es6-promise";
 const LANG_NOT_FOUND =
   "Registro no encontrado. Ingresa un ID válido, o problablemente el ID que ingresaste ya fue eliminado.";
 
-export default class Database {
+/**
+ * Clase con funciones y conexiones a la base de datos.
+ * @param {function} callbackStartServer Función que llamará cuando esté lista la conexión.
+ */
+class Database {
   constructor(callbackStartServer) {
     //Conectamos la base de datos de mongodb
     MongoClient.connect(credentials.mongopath, {
@@ -26,8 +30,8 @@ export default class Database {
 
   /**
    * Función para añadir un registro a la base de datos
-   * @param {string} text
-   * @param {string} ip
+   * @param {string} text Texto en base64 a encriptar
+   * @param {string} ip IP del cliente
    * @returns Promesa de mongodb
    */
   async addReg(text, ip) {
@@ -72,6 +76,12 @@ export default class Database {
     });
   }
 
+  /**
+   * Función para obtener un contenido
+   * @param {string} id ID del registro
+   * @param {string} secret Clave para desencriptar el archivo
+   * @returns Promesa con el JSON de respuesta
+   */
   async getReg(id, secret) {
     return await new Promise((resolve, reject) => {
       if (!id) {
@@ -209,14 +219,19 @@ export default class Database {
 
   /**
    * Función para generar un hash de md5
-   * @param {string} text
+   * @param {string} text Texto a evalúar
    * @returns Hash md5
    */
   md5(text) {
     return CryptoJS.MD5(text).toString();
   }
 
+  /**
+   * Función para cerrar la conexión de la base de datos.
+   */
   closeConnection() {
     this.client.close();
   }
 }
+
+export default Database;

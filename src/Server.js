@@ -3,16 +3,19 @@ import Database from "./Database";
 const express = require("express");
 const cors = require("cors");
 
-export default function Server() {
+/**
+ * Función que inicia el API REST
+ * @returns Retorna la instancia del servidor express
+ */
+function Server() {
   let app = express().use(cors()).use(express.json()); //Crea al servidor
+  const port = process.env.PORT || 20203; //Puerto donde abriremos el servicio
 
   app.use((req, res, next) => {
     req; //Para que no me aparezca que no usé la variable jaja
     res.header("Access-Control-Allow-Origin", "*");
     next();
   });
-
-  const port = process.env.PORT || 20203; //Puerto donde abriremos el servicio
 
   const db = new Database(() => {
     /**
@@ -85,3 +88,5 @@ export default function Server() {
 
   return app;
 }
+
+export default Server;
