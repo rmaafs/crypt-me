@@ -78,14 +78,6 @@ jobs:
         run: |
           npm run generate-docs
 
-      - name: 🚀 Deploy docs
-        uses: JamesIves/github-pages-deploy-action@3.5.9
-        env:
-          ACTIONS_ALLOW_UNSECURE_COMMANDS: "true"
-        with:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-          BRANCH: gh-pages-docs
-          FOLDER: docs
       - name: 📄 Crear Pull Request
         uses: peter-evans/create-pull-request@v3
         with:
@@ -99,3 +91,12 @@ jobs:
             Por lo que se ha generado una nueva documentación.
           labels: documentation
           reviewers: rmaafs
+
+      - name: 🚀 Deploy docs
+        uses: JamesIves/github-pages-deploy-action@3.5.9
+        env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: "true"
+        with:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          BRANCH: gh-pages-docs
+          FOLDER: docs
