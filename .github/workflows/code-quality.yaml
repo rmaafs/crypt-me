@@ -2,10 +2,10 @@ name: Code Quality
 on:
   pull_request:
     branches:
-      - master
+      - web-page
   push:
     branches:
-      - master
+      - web-page
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
