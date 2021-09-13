@@ -43,7 +43,8 @@ function Server() {
   const port &#x3D; process.env.PORT || 20203; //Puerto donde abriremos el servicio
 
   app.use((req, res, next) &#x3D;&gt; {
-    req; //Para que no me aparezca que no usé la variable jaja
+    if (!req) return; //Para que no me aparezca que no usé la variable jaja
+
     res.header(&quot;Access-Control-Allow-Origin&quot;, &quot;*&quot;);
     next();
   });
