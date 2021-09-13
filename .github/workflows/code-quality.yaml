@@ -49,3 +49,40 @@ jobs:
           echo $MONGO_BD
           echo '{ "mongopath": "${{ secrets.MONGO_BD }}"}' > credentials.json
           npm test -- connections.test.js --forceExit
+  generate-docs:
+    needs: code-quality
+    name: "📃 Generate docs"
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+      - name: 🔽 Descargar proyecto
+        uses: actions/checkout@v2
+        with:
+          persist-credential: false
+
+      - name: 🏠 Instalar Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: 👷‍♂️ Instalar dependencias
+        run: |
+          npm i
+
+      - name: 👷📃 Generar documentación
+        run: |
+          npm i
+
+      - name: 🚀 Deploy docs
+        uses: JamesIves/github-pages-deploy-action@3.5.9
+        env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: "true"
+        with:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          BRANCH: gh-pages-docs
+          FOLDER: docs
