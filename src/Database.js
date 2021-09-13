@@ -9,7 +9,7 @@ const LANG_NOT_FOUND =
 
 /**
  * Clase con funciones y conexiones a la base de datos.
- * @param {function} callbackStartServer Función que llamará cuando esté lista la conexión.
+ * @param {function} callbackStartServer Función que se llamará cuando esté lista la conexión.
  */
 class Database {
   constructor(callbackStartServer) {
