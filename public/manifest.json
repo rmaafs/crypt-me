@@ -1,7 +1,14 @@
 {
-  "short_name": "Crypt Me",
-  "name": "Comparte texto de forma segura y gratuita",
+  "short_name": "Crypt Me!",
+  "name": "Crypt Me!",
+  "description": "Comparte texto de forma segura y gratuita.",
   "icons": [
+    {
+      "src": "logo192_maskable.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "maskable"
+    },
     {
       "src": "logo192.png",
       "type": "image/png",
@@ -10,12 +17,11 @@
     {
       "src": "logo512.png",
       "type": "image/png",
-      "sizes": "512x512",
-      "purpose": "maskable"
+      "sizes": "512x512"
     }
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#00B4FF",
+  "background_color": "#00B4FF"
 }
