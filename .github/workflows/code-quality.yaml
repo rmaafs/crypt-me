@@ -27,7 +27,7 @@ jobs:
 
       - name: 👷‍♂️ Instalar dependencias
         run: |
-          npm ci
+          npm i
       - name: 🔅 Sintaxis estándar prettier
         run: |
           echo "Recuerda tener instalado Prettier como formateador de código en tu Editor de texto"
