@@ -39,6 +39,7 @@ const ViewContent = ({ navigate, id, secret }) => {
 
   useEffect(() => {
     fetchData();
+    // eslint-disable-next-line
   }, []);
 
   return (
