@@ -1,4 +1,4 @@
-name: Code Quality
+name: Build & Deploy
 on:
   push:
     branches:
@@ -89,7 +89,7 @@ jobs:
       - name: 📄 Crear Pull Request
         uses: peter-evans/create-pull-request@v3
         with:
-          branch: master-test
+          branch: master
           delete-branch: true
           commit-message: Nueva documentación generada
           title: Nueva documentación generada
