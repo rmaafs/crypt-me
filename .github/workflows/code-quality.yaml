@@ -89,7 +89,8 @@ jobs:
       - name: 📄 Crear Pull Request
         uses: peter-evans/create-pull-request@v3
         with:
-          branch: master
+          branch: master-docs
+          base: master
           delete-branch: true
           commit-message: Nueva documentación generada
           title: Nueva documentación generada
