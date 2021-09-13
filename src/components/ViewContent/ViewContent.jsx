@@ -12,7 +12,7 @@ const ViewContent = ({ navigate, id, secret }) => {
   const [title, setTitle] = useState("Cargando...");
 
   const fetchData = () => {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       fetch(server.url, {
         method: "PATCH",
         headers: {
