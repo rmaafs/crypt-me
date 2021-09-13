@@ -76,7 +76,7 @@ jobs:
 
       - name: 👷📃 Generar documentación
         run: |
-          npm i
+          npm run generate-docs
 
       - name: 🚀 Deploy docs
         uses: JamesIves/github-pages-deploy-action@3.5.9
@@ -86,3 +86,15 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           BRANCH: gh-pages-docs
           FOLDER: docs
+      - name: 📄 Crear Pull Request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          branch: master-test
+          delete-branch: true
+          commit-message: Nueva documentación generada
+          title: Nueva documentación generada
+          body: |
+            Se ha detectado nuevos cambios en la documentación del archivo. 
+            Por lo que se ha generado una nueva documentación.
+          labels: documentation
+          reviewers: rmaafs
