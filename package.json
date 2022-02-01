@@ -20,7 +20,7 @@
     "crypto-js": "^4.1.1",
     "es6-promise": "^4.2.8",
     "express": "^4.17.1",
-    "mongodb": "^4.1.1"
+    "mongodb": "^4.3.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.15.4",
